@@ -1,0 +1,15 @@
+{
+  "login": {
+    "username": "Felhasználónév ",
+    "username.required": "Felhasználónév megadása kötelező!",
+    "password": "Jelszó",
+    "password.required": "Jelszó megadása kötelező!",
+    "loginLabel": "Bejelentkezés",
+    "appName": "Sleep analyser",
+    "action": {
+      "successful": "Sikeres bejelentkezés",
+      "invalid_form": "Töltsd ki a mezőket",
+      "error": "Nem szerepelsz a rendszerben vagy hibás felhasználónevet/jelszót adtál meg."
+    }
+  }
+}

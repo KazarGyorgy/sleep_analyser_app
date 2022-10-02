@@ -1,0 +1,43 @@
+<div class="d-flex w-100 h-100 justify-content-center align-items-center">
+  <mat-card class="mat-elevation-z24">
+    <mat-card-title class="mb-4 text-center">{{
+      "login.appName" | translate
+    }}</mat-card-title>
+    <mat-card-subtitle class="mb-4 text-center">{{
+      "login.loginLabel" | translate
+    }}</mat-card-subtitle>
+
+    <mat-card-content>
+      <div [formGroup]="loginForm">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ "login.username" | translate }}</mat-label>
+            <input matInput formControlName="username" />
+            <mat-icon matSuffix>account_circle</mat-icon>
+            <mat-error *ngIf="formControls.username?.errors?.required">
+              {{ "login.username.required" | translate }}</mat-error
+            >
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>{{"login.password" | translate}}</mat-label>
+            <input matInput type="password" formControlName="password" />
+            <mat-icon matSuffix>lock</mat-icon>
+            <mat-error *ngIf="formControls.password?.errors?.required">
+             {{"login.password.required" | translate}}</mat-error
+            >
+          </mat-form-field>
+        </p>
+        <p class="d-flex justify-content-center">
+          <button mat-raised-button color="primary" (click)="onLogin()">
+            {{
+              "login.loginLabel" | translate
+            }}
+          </button>
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<p-toast></p-toast>
