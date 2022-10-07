@@ -1,0 +1,9 @@
+<p-menubar [model]="items" class="bg-primary">
+<ng-template  pTemplate="start">
+  <button mat-button (click)="navigateToHome()">Sleep Analyser</button>
+
+</ng-template>
+  <ng-template pTemplate="end" style="justify-items: flex-end">
+    <button mat-button><i class="pi pi-fw pi-sign-out p-my-auto red logout"></i></button>
+  </ng-template>
+</p-menubar>
