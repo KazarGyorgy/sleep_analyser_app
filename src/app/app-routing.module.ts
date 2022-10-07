@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DoctorsComponent } from './components/doctors/doctors.component';
 import { LoginComponent } from './components/login/login.component';
-import { AuthGuard } from './guards/auth.guard';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'home', canActivate: [AuthGuard], component: DashboardComponent },
+  { path: 'home', canActivate: [], component: DashboardComponent },
+  { path: 'users', canActivate: [], component: UsersComponent },
+  { path: 'doctors', canActivate: [], component: DoctorsComponent },
   { path: '**', component: LoginComponent },
 ];
 
