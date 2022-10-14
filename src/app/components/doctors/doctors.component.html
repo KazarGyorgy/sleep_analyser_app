@@ -1,1 +1,113 @@
-<p>doctors works!</p>
+<div class="m-1 mx-3 mx-auto">
+  <p-tabView class="w-100">
+    <p-tabPanel header="Doktorok">
+      <p-card class="w-100">
+       <app-doctors-table></app-doctors-table>
+      </p-card>
+    </p-tabPanel>
+
+    <!-- Új orvos felvétele -->
+    <p-tabPanel header="Új doktor hozzáadása">
+      <p-card class="w-100">
+        <div [formGroup]="registerForm">
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{ "registration.lastname" | translate }}</mat-label>
+                <input matInput formControlName="lastName" />
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{
+                  "registration.firstname" | translate
+                }}</mat-label>
+                <input matInput formControlName="firstName" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-3">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{ "registration.zip" | translate }}</mat-label>
+                <input matInput formControlName="zip" />
+              </mat-form-field>
+            </div>
+            <div class="col col-md-3">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{ "registration.city" | translate }}</mat-label>
+                <input matInput formControlName="city"
+              /></mat-form-field>
+            </div>
+            <div class="col col-md-6">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{ "registration.address" | translate }}</mat-label>
+                <input matInput formControlName="streetAddress" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col col-md-6">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{ "registration.email" | translate }}</mat-label>
+                <input matInput formControlName="email" />
+              </mat-form-field>
+            </div>
+            <div class="col col-md-6">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{ "registration.phone" | translate }}</mat-label>
+                <input matInput formControlName="phoneNumber" [textMask]="{mask:phoneNumberMask}"/>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-6">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{ "registration.drNo" | translate }}</mat-label>
+                <input matInput formControlName="tajNumber" />
+              </mat-form-field>
+            </div>
+            <div class="col col-md-6">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{
+                  "registration.birthdate" | translate
+                }}</mat-label>
+                <input type="date" matInput formControlName="birthdate" />
+              </mat-form-field>
+            </div>
+          </div>
+          </div>
+
+        <div class="d-flex justify-content-end">
+          <button mat-raised-button color="primary" (click)="onRegistration()">
+            Orvos hozzáadása
+          </button>
+        </div>
+      </p-card>
+    </p-tabPanel>
+  </p-tabView>
+
+  <p-toast></p-toast>
+  <p-confirmDialog #cd class="w-50">
+    <ng-template pTemplate="header"> </ng-template>
+    <ng-template pTemplate="footer">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-times"
+        label="Mégse"
+        class="p-button-danger"
+        (click)="cd.reject()"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-check"
+        label="igen"
+        class="p-button-primary"
+        (click)="cd.accept()"
+      ></button>
+    </ng-template>
+  </p-confirmDialog>
+</div>

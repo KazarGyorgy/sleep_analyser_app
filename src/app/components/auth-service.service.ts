@@ -72,4 +72,7 @@ export class AuthService {
       return null;
     }
   }
+  public logout() {
+    return this.tokenStorage.signOut();
+  }
 }

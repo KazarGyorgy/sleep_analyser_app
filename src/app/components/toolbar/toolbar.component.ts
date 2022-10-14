@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { AuthService } from '../auth-service.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,8 +11,13 @@ import { MenuItem } from 'primeng/api';
 })
 export class ToolbarComponent implements OnInit {
   items!: MenuItem[];
+  
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private tokenStorage: TokenStorageService
+  ) {}
 
   ngOnInit() {
     this.items = [
@@ -24,11 +31,15 @@ export class ToolbarComponent implements OnInit {
         icon: 'pi pi-fw pi-users',
         routerLink: ['doctors'],
       },
-
     ];
   }
 
   navigateToHome(): void {
     this.router.navigateByUrl('home');
+  }
+
+  onLogout() {
+    this.router.navigateByUrl('login');
+    this.authService.logout();
   }
 }

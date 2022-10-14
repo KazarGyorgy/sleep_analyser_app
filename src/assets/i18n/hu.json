@@ -11,5 +11,19 @@
       "invalid_form": "Töltsd ki a mezőket",
       "error": "Nem szerepelsz a rendszerben vagy hibás felhasználónevet/jelszót adtál meg."
     }
+  },
+  "registration":{
+    "lastname": "Vezetéknév",
+    "firstname": "Keresztnév",
+    "birthdate": "Születési dátum",
+
+    "zip": "Irányítószám",
+    "city": "Város",
+    "address": "Cím",
+    "phone": "Telefonszám",
+    "email": "E-mail cím",
+    "taj": "Taj szám",
+    "username":"Felhasználónév"
   }
+
 }
