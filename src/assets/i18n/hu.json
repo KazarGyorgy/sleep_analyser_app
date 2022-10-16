@@ -16,7 +16,7 @@
     "lastname": "Vezetéknév",
     "firstname": "Keresztnév",
     "birthdate": "Születési dátum",
-
+    "drID": "Orvosi azonosító",
     "zip": "Irányítószám",
     "city": "Város",
     "address": "Cím",

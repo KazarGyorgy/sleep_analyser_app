@@ -1,15 +1,14 @@
-<div class="m-3">
-  <p-tabView class="w-100" [(activeIndex)]="tabIndex">
-    <p-tabPanel header="Doktorok">
+<div class="m-1 mx-3 mx-auto">
+  <p-tabView class="w-100">
+    <p-tabPanel header="Páciensek">
       <p-card class="w-100">
-       <app-doctors-table (selectedUser)="onModifyDr($event)" [needToRefresh]="needToRefresh" (refreshed)="refresh($event)"></app-doctors-table>
+       <app-patient-list></app-patient-list>
       </p-card>
     </p-tabPanel>
 
-    <!-- Új orvos felvétele -->
-    <p-tabPanel header="Új doktor hozzáadása">
+    <p-tabPanel header="Új Páciens hozzáadása">
       <p-card class="w-100">
-        <app-new-doctor [selectedDr]="selectedDr" (needToRefresh)="refresh($event)"></app-new-doctor>
+      <app-new-patient></app-new-patient>
       </p-card>
     </p-tabPanel>
   </p-tabView>

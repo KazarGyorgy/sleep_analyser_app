@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { User } from '../../model/user.model';
 import { DoctorService } from '../doctor.service';
+import { Output, EventEmitter } from '@angular/core';
+import { Subject, timeout } from 'rxjs';
 
 @Component({
   selector: 'app-doctors-table',
@@ -11,6 +13,10 @@ import { DoctorService } from '../doctor.service';
 })
 export class DoctorsTableComponent implements OnInit {
   doctorList: User[] = [];
+  @Output() selectedUser = new EventEmitter<User>();
+  @Output() refreshed = new EventEmitter();
+  @Input() needToRefresh!: Subject<boolean> ;
+
   constructor(
     private docService: DoctorService,
     private confirmationService: ConfirmationService,
@@ -22,7 +28,20 @@ export class DoctorsTableComponent implements OnInit {
     this.getDoctors();
   }
 
-  modify() {}
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(this.needToRefresh)
+    if(changes['needToRefresh'].currentValue == true) {
+      console.log("itt vagok")
+      this.getDoctors();
+    }
+
+    this.refreshed.emit(true);
+
+  }
+
+  modify(user: User) {
+    this.selectedUser.emit(user);
+  }
 
   onDelete(userId: number) {
     this.confirmationService.confirm({
@@ -32,7 +51,7 @@ export class DoctorsTableComponent implements OnInit {
 
         this.messageService.add({
           severity: 'success',
-          detail: this.translateServ.instant('User deleted')
+          detail: this.translateServ.instant('User deleted'),
         });
         this.getDoctors();
       },

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../model/user.model';
 
@@ -9,7 +9,8 @@ import { User } from '../model/user.model';
   providedIn: 'root',
 })
 export class DoctorService {
-  private apiURL:string =`${environment.api}/user`;
+  private apiURL: string = `${environment.api}/user`;
+  needToRefresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(
     private http: HttpClient,
     private messageService: MessageService
@@ -37,7 +38,25 @@ export class DoctorService {
     return this.http.get<User[]>(`${this.apiURL}/users/doctor`);
   }
 
-  delete(id:number){
+  delete(id: number) {
     return this.http.delete(`${this.apiURL}/${id}`).subscribe();
+  }
+
+  updateDoctor(id: number, formData: any) {
+    return this.http.patch<User>(`${this.apiURL}/${id}`,formData).subscribe(
+      () =>
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Sikeres mentés',
+          detail: `A felhasználó mentvve ${formData.firstName} ${formData.lastName}`,
+        }),
+      (err: any) =>{
+      console.log(err),
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Hiba a mentés során',
+          detail: err,
+        })}
+    );
   }
 }

@@ -26,16 +26,19 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DoctorsComponent } from './components/doctors/doctors.component';
 import { LoginComponent } from './components/login/login.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { UsersComponent } from './components/users/users.component';
+import { UsersComponent } from './components/patients/users.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { CardModule } from 'primeng/card';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {InputMaskModule} from 'primeng/inputmask';
-import { InputTextModule } from "primeng/inputtext";
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputTextModule } from 'primeng/inputtext';
 import { TextMaskModule } from 'angular2-text-mask';
 import { DoctorsTableComponent } from './components/doctors/doctors-table/doctors-table.component';
+import { NewPatientComponent } from './components/patients/new-patient/new-patient.component';
+import { PatientListComponent } from './components/patients/patient-list/patient-list.component';
+import { NewDoctorComponent } from './components/doctors/new-doctor/new-doctor.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,9 @@ import { DoctorsTableComponent } from './components/doctors/doctors-table/doctor
     UsersComponent,
     DoctorsComponent,
     DoctorsTableComponent,
+    NewPatientComponent,
+    PatientListComponent,
+    NewDoctorComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,7 +83,7 @@ import { DoctorsTableComponent } from './components/doctors/doctors-table/doctor
     ConfirmDialogModule,
     InputMaskModule,
     InputTextModule,
-    TextMaskModule
+    TextMaskModule,
   ],
   providers: [
     ConfirmationService,

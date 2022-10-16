@@ -3,7 +3,7 @@ export type User = {
   firstName: string;
   lastName: string;
   zip: number;
-  City: string;
+  city: string;
   streetAddress: string;
   tajNumber: number;
   drId: number;
