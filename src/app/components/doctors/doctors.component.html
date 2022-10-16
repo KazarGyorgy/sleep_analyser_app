@@ -2,7 +2,7 @@
   <p-tabView class="w-100" [(activeIndex)]="tabIndex">
     <p-tabPanel header="Doktorok">
       <p-card class="w-100">
-       <app-doctors-table (selectedUser)="onModifyDr($event)" [needToRefresh]="needToRefresh" (refreshed)="refresh($event)"></app-doctors-table>
+       <app-doctors-table (selectedUser)="onModifyDr($event)"></app-doctors-table>
       </p-card>
     </p-tabPanel>
 

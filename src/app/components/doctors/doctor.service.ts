@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -16,47 +16,20 @@ export class DoctorService {
     private messageService: MessageService
   ) {}
 
-  saveDoctor(formData: any) {
+  saveDoctor(formData: any): Observable<any> {
     const path = `${this.apiURL}/doctor`;
-    this.http.post(path, formData).subscribe(
-      () =>
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Sikeres mentés',
-          detail: `A felhasználó mentvve ${formData.firstName} ${formData.lastName}`,
-        }),
-      (err: any) =>
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Hiba a mentés során',
-          detail: err,
-        })
-    );
+    return this.http.post(path, formData);
   }
 
   getDoctorList(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiURL}/users/doctor`);
   }
 
-  delete(id: number) {
-    return this.http.delete(`${this.apiURL}/${id}`).subscribe();
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.apiURL}/${id}`);
   }
 
-  updateDoctor(id: number, formData: any) {
-    return this.http.patch<User>(`${this.apiURL}/${id}`,formData).subscribe(
-      () =>
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Sikeres mentés',
-          detail: `A felhasználó mentvve ${formData.firstName} ${formData.lastName}`,
-        }),
-      (err: any) =>{
-      console.log(err),
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Hiba a mentés során',
-          detail: err,
-        })}
-    );
+  updateDoctor(id: number, formData: any): Observable<any> {
+    return this.http.patch<User>(`${this.apiURL}/${id}`, formData);
   }
 }

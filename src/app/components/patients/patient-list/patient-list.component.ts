@@ -23,13 +23,13 @@ export class PatientListComponent implements OnInit {
     this.getPatient();
   }
 
-  modify() {}
+  modify(patient: User) {}
 
   onDelete(userId: number) {
     this.confirmationService.confirm({
       message: 'Biztosan törölni szeretné az orvost?',
       accept: async () => {
-        this.patientService.delete(userId);
+       this.patientService.delete(userId).subscribe(()=> this.getPatient());
 
         this.messageService.add({
           severity: 'success',

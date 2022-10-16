@@ -3,13 +3,14 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output, SimpleChanges
+  Output,
+  SimpleChanges,
 } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -27,6 +28,7 @@ export class NewDoctorComponent implements OnInit {
   @Output() needToRefresh = new EventEmitter();
 
   public phoneNumberMask = [
+    '+',
     /\d/,
     /\d/,
     '-',
@@ -36,8 +38,8 @@ export class NewDoctorComponent implements OnInit {
     /\d/,
     /\d/,
     /\d/,
-    /\d/,
     '-',
+    /\d/,
     /\d/,
     /\d/,
     /\d/,
@@ -77,24 +79,58 @@ export class NewDoctorComponent implements OnInit {
         drId: dr.drId,
         phoneNumber: dr.phoneNumber,
         email: dr.email,
-        birthdate: new Date(dr.birthdate)
+        birthdate: new Date(dr.birthdate),
       });
     }
   }
 
   onRegistration() {
     if (this.registerForm.status === 'VALID') {
-      if(!this.selectedDr){
-
-        this.docService.saveDoctor(this.registerForm.value);
+      if (!this.selectedDr) {
+        this.docService.saveDoctor(this.registerForm.value).subscribe(
+          () => {
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Sikeres mentés',
+              detail: `A felhasználó mentvve ${this.registerForm.get(
+                'firstName'
+              )} ${this.registerForm.get('lastName')}`,
+            });
+            this.registerForm.reset();
+            this.needToRefresh.emit(true);
+          },
+          (err: any) =>
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Hiba a mentés során',
+              detail: err,
+            })
+        );
       } else {
-        this.docService.updateDoctor(this.selectedDr.id,this.registerForm.value);
-        this.selectedDr = undefined;
+        this.docService
+          .updateDoctor(this.selectedDr.id, this.registerForm.value)
+          .subscribe(
+            () => {
+              this.messageService.add({
+                severity: 'info',
+                summary: 'Sikeres mentés',
+                detail: `A felhasználó mentvve ${this.registerForm.get(
+                  'firstName'
+                )} ${this.registerForm.get('lastName')}`,
+              });
+              this.registerForm.reset();
+              this.needToRefresh.emit(true);
+            },
+            (err: any) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Hiba a mentés során',
+                detail: err,
+              });
+              this.selectedDr = undefined;
+            }
+          );
       }
-
-      this.registerForm.reset();
-
-     this.needToRefresh.emit(true);
     } else {
       this.messageService.add({
         severity: 'error',

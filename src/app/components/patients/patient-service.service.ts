@@ -38,6 +38,6 @@ export class PatientService {
   }
 
   delete(id: number) {
-    return this.http.delete(`${this.apiURL}/${id}`).subscribe();
+    return this.http.delete(`${this.apiURL}/${id}`);
   }
 }

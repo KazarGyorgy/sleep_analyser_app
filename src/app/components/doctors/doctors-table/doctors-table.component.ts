@@ -1,10 +1,16 @@
-import { Component, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  SimpleChange,
+  SimpleChanges,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { User } from '../../model/user.model';
 import { DoctorService } from '../doctor.service';
 import { Output, EventEmitter } from '@angular/core';
-import { Subject, timeout } from 'rxjs';
+import { Subject, subscribeOn, timeout } from 'rxjs';
 
 @Component({
   selector: 'app-doctors-table',
@@ -14,8 +20,8 @@ import { Subject, timeout } from 'rxjs';
 export class DoctorsTableComponent implements OnInit {
   doctorList: User[] = [];
   @Output() selectedUser = new EventEmitter<User>();
-  @Output() refreshed = new EventEmitter();
-  @Input() needToRefresh!: Subject<boolean> ;
+
+
 
   constructor(
     private docService: DoctorService,
@@ -24,19 +30,23 @@ export class DoctorsTableComponent implements OnInit {
     private translateServ: TranslateService
   ) {}
 
+
   ngOnInit(): void {
+    this.docService.needToRefresh.subscribe(needToRefresh => {
+      if(needToRefresh){
+        this.getDoctors();
+        this.docService.needToRefresh.next(false);
+      }
+    })
     this.getDoctors();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.needToRefresh)
-    if(changes['needToRefresh'].currentValue == true) {
-      console.log("itt vagok")
+this.docService.needToRefresh.subscribe
+    if (changes['needToRefresh'].currentValue == true) {
+      console.log('itt vagok');
       this.getDoctors();
     }
-
-    this.refreshed.emit(true);
-
   }
 
   modify(user: User) {
@@ -47,13 +57,15 @@ export class DoctorsTableComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Biztosan törölni szeretné az orvost?',
       accept: async () => {
-        this.docService.delete(userId);
-
-        this.messageService.add({
-          severity: 'success',
-          detail: this.translateServ.instant('User deleted'),
+        this.docService.delete(userId).subscribe((res) => {
+          if (res) {
+            this.messageService.add({
+              severity: 'success',
+              detail: this.translateServ.instant('User deleted'),
+            });
+            this.getDoctors();
+          }
         });
-        this.getDoctors();
       },
     });
   }
