@@ -11,7 +11,7 @@ import { AuthService } from '../auth-service.service';
 })
 export class ToolbarComponent implements OnInit {
   items!: MenuItem[];
-  
+  userMenu!: MenuItem[];
 
   constructor(
     private router: Router,
@@ -30,6 +30,14 @@ export class ToolbarComponent implements OnInit {
         label: 'Orvosok',
         icon: 'pi pi-fw pi-users',
         routerLink: ['doctors'],
+      },
+    ];
+
+    this.userMenu = [
+      {
+        label: 'Jelszó módosítása',
+        icon: 'pi pi-fw pi-lock',
+        routerLink: ['change-password'],
       },
     ];
   }
