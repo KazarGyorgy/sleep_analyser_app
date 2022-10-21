@@ -1,14 +1,14 @@
 <div class="m-1 mx-3 mx-auto">
-  <p-tabView class="w-100">
+  <p-tabView class="w-100"[(activeIndex)]="tabIndex">
     <p-tabPanel header="Páciensek">
       <p-card class="w-100">
-       <app-patient-list></app-patient-list>
+       <app-patient-list (selectedPatient)="onModifyPatient($event)"></app-patient-list>
       </p-card>
     </p-tabPanel>
 
     <p-tabPanel header="Új Páciens hozzáadása">
       <p-card class="w-100">
-      <app-new-patient></app-new-patient>
+      <app-new-patient [selectedPatient]="selectedPatient" ></app-new-patient>
       </p-card>
     </p-tabPanel>
   </p-tabView>

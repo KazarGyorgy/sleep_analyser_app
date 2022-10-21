@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -14,6 +15,8 @@ import {
 } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastHelperService } from 'src/app/helpers/toast-helper';
+
 import { User } from '../../model/user.model';
 import { DoctorService } from '../doctor.service';
 
@@ -50,7 +53,7 @@ export class NewDoctorComponent implements OnInit {
     private formBuilder: FormBuilder,
     private translateService: TranslateService,
     private docService: DoctorService,
-    private confirmationService: ConfirmationService
+    private toastHelper: ToastHelperService
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +73,7 @@ export class NewDoctorComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['selectedDr'].currentValue !== undefined) {
       const dr = changes['selectedDr'].currentValue;
+
       this.registerForm.setValue({
         firstName: dr.firstName,
         lastName: dr.lastName,
@@ -79,7 +83,7 @@ export class NewDoctorComponent implements OnInit {
         drId: dr.drId,
         phoneNumber: dr.phoneNumber,
         email: dr.email,
-        birthdate: new Date(dr.birthdate),
+        birthdate: new Date('2022.01.01'),
       });
     }
   }
@@ -89,54 +93,43 @@ export class NewDoctorComponent implements OnInit {
       if (!this.selectedDr) {
         this.docService.saveDoctor(this.registerForm.value).subscribe(
           () => {
-            this.messageService.add({
-              severity: 'info',
-              summary: 'Sikeres mentés',
-              detail: `A felhasználó mentvve ${this.registerForm.get(
-                'firstName'
-              )} ${this.registerForm.get('lastName')}`,
-            });
+            this.toastHelper.successMessage(
+              'Sikeres mentés',
+              `A felhasználó mentvve ${
+                this.registerForm.get('firstName')?.value
+              } ${this.registerForm.get('lastName')?.value}`
+            );
+
             this.registerForm.reset();
             this.needToRefresh.emit(true);
           },
-          (err: any) =>
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Hiba a mentés során',
-              detail: err,
-            })
+          (err: any) => {
+            this.toastHelper.errorMessage('Hiba a mentés során', '');
+          }
         );
       } else {
         this.docService
           .updateDoctor(this.selectedDr.id, this.registerForm.value)
           .subscribe(
             () => {
-              this.messageService.add({
-                severity: 'info',
-                summary: 'Sikeres mentés',
-                detail: `A felhasználó mentvve ${this.registerForm.get(
-                  'firstName'
-                )} ${this.registerForm.get('lastName')}`,
-              });
+              this.toastHelper.successMessage(
+                'Sikeres mentés',
+                `A felhasználó módosítása sikeres volt.`
+              );
               this.registerForm.reset();
               this.needToRefresh.emit(true);
             },
             (err: any) => {
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Hiba a mentés során',
-                detail: err,
-              });
+              this.toastHelper.errorMessage('Hiba a mentés során', '');
               this.selectedDr = undefined;
             }
           );
       }
     } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Hiba a mentés során',
-        detail: 'A mezők kitöltése nem megfelelő',
-      });
+      this.toastHelper.errorMessage(
+        'Hiba a mentés során',
+        'A mezők kitöltése nem megfelelő'
+      );
     }
   }
 }

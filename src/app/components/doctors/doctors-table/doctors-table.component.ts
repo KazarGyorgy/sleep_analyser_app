@@ -1,16 +1,10 @@
 import {
-  Component,
-  Input,
-  OnInit,
-  SimpleChange,
-  SimpleChanges,
+  Component, EventEmitter, OnInit, Output, SimpleChanges
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { User } from '../../model/user.model';
 import { DoctorService } from '../doctor.service';
-import { Output, EventEmitter } from '@angular/core';
-import { Subject, subscribeOn, timeout } from 'rxjs';
 
 @Component({
   selector: 'app-doctors-table',
@@ -44,7 +38,6 @@ export class DoctorsTableComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
 this.docService.needToRefresh.subscribe
     if (changes['needToRefresh'].currentValue == true) {
-      console.log('itt vagok');
       this.getDoctors();
     }
   }

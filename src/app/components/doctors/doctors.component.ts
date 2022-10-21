@@ -5,14 +5,14 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subject } from 'rxjs';
 import { User } from '../model/user.model';
 import { DoctorService } from './doctor.service';
-import { DoctorsTableComponent } from './doctors-table/doctors-table.component';
+
 @Component({
   selector: 'app-doctors',
   templateUrl: './doctors.component.html',
   styleUrls: ['./doctors.component.css'],
 })
 export class DoctorsComponent implements OnInit {
-  @ViewChild(DoctorsTableComponent) child!: DoctorsTableComponent;
+
   registerForm!: FormGroup;
   selectedDr?: User;
   tabIndex: number = 0;

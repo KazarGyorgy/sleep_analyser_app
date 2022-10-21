@@ -7,43 +7,28 @@ import { PatientService } from './patient-service.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
   patients: User[] = [];
+  tabIndex: number = 0;
+  selectedPatient?: User;
 
   constructor(
-    private patientsService: PatientService ,
+    private patientsService: PatientService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private translateServ: TranslateService
-  ) {}
-
-  ngOnInit(): void {
-    this.getPatients();
+  ) {
+    this.patientsService.activeTabIndex.subscribe(
+      (index) => (this.tabIndex = index)
+    );
   }
 
-  modify() {}
+  ngOnInit(): void {}
 
-  onDelete(userId: number) {
-    this.confirmationService.confirm({
-      message: 'Biztosan törölni szeretné az orvost?',
-      accept: async () => {
-        this.patientsService.delete(userId);
-
-        this.messageService.add({
-          severity: 'success',
-          detail: this.translateServ.instant('User deleted')
-        });
-        this.getPatients();
-      },
-    });
-  }
-
-  getPatients() {
-    this.patients = [];
-    this.patientsService
-      .getUserList()
-      .subscribe((patients) => (this.patients = patients));
+  onModifyPatient(patient: User) {
+    this.tabIndex =1;
+    this.selectedPatient = patient;
   }
 }

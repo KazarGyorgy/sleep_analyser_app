@@ -1,30 +1,61 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { ToastHelperService } from 'src/app/helpers/toast-helper';
 import { User } from '../../model/user.model';
 import { PatientService } from '../patient-service.service';
 
 @Component({
   selector: 'app-new-patient',
   templateUrl: './new-patient.component.html',
-  styleUrls: ['./new-patient.component.css']
+  styleUrls: ['./new-patient.component.css'],
 })
 export class NewPatientComponent implements OnInit {
   registerForm!: FormGroup;
   @Input() selectedPatient?: User;
 
-  public phoneNumberMask = [/\d/, /\d/, '-', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/,'-', /\d/, /\d/, /\d/]
-
+  public phoneNumberMask = [
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+    '/',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+    /\d/,
+  ];
+  public zipMask = [/\d/, /\d/, /\d/, /\d/];
+  public tajMask = [
+    /\d/,
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+    /\d/,
+  ];
   constructor(
     private messageService: MessageService,
     private formBuilder: FormBuilder,
-    private translateService: TranslateService,
-    private patientService: PatientService,
-    private confirmationService: ConfirmationService
-  ) {
 
-  }
+    private patientService: PatientService,
+    private toastHelper: ToastHelperService
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
@@ -40,10 +71,10 @@ export class NewPatientComponent implements OnInit {
     });
   }
 
-
   ngOnChanges(changes: SimpleChanges) {
     if (changes['selectedPatient'].currentValue !== undefined) {
       const patient = changes['selectedPatient'].currentValue;
+      console.log(patient);
       this.registerForm.setValue({
         firstName: patient.firstName,
         lastName: patient.lastName,
@@ -53,15 +84,35 @@ export class NewPatientComponent implements OnInit {
         tajNumber: patient.tajNumber,
         phoneNumber: patient.phoneNumber,
         email: patient.email,
-        birthdate: new Date(patient.birthdate)
+        birthdate: new Date(patient.birthdate),
       });
     }
   }
 
   onRegistration() {
     if (this.registerForm.status === 'VALID') {
-      this.patientService.save(this.registerForm.value);
-      this.registerForm.reset();
+      if (!this.selectedPatient) {
+        this.patientService.save(this.registerForm.value);
+        this.registerForm.reset();
+      } else {
+        this.patientService
+          .update(this.selectedPatient.id, this.registerForm.value)
+          .subscribe(
+            () => {
+              this.toastHelper.successMessage(
+                'Sikeres mentés',
+                `A felhasználó módosítása sikeres volt.`
+              );
+              this.registerForm.reset();
+             this.patientService.needToRefresh.next(true);
+             this.patientService.activeTabIndex.next(0);
+            },
+            (err: any) => {
+              this.toastHelper.errorMessage('Hiba a mentés során', '');
+            }
+          );
+
+      }
     } else {
       this.messageService.add({
         severity: 'error',
