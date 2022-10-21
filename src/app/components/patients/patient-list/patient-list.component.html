@@ -1,0 +1,45 @@
+<p-table class="w-100" [value]="patientList">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="lastName">
+        Vezetéknév<p-sortIcon field="lastName"></p-sortIcon>
+      </th>
+      <th pSortableColumn="firstName">
+        Keresztnév <p-sortIcon field="firstName"></p-sortIcon>
+      </th>
+      <th pSortableColumn="zip">
+        Irányítószám <p-sortIcon field="zip"></p-sortIcon>
+      </th>
+      <th pSortableColumn="city">
+        Város <p-sortIcon field="city"></p-sortIcon>
+      </th> <th pSortableColumn="streetAddress">
+        Cím <p-sortIcon field="streetAddress"></p-sortIcon>
+      </th>
+      <th pSortableColumn="phoneNumber">
+        Telefonszám <p-sortIcon field="phoneNumber"></p-sortIcon>
+      </th>
+      <th pSortableColumn="email">
+        email <p-sortIcon field="email"></p-sortIcon>
+      </th>
+      <th pSortableColumn="tajNumber">
+       Taj szám <p-sortIcon field="tajNumber"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-patient>
+    <tr>
+      <td>{{ patient.lastName }}</td>
+      <td>{{ patient.firstName }}</td>
+      <td>{{ patient.zip}}</td>
+      <td>{{ patient.city}}</td>
+      <td>{{ patient.streetAddress}}</td>
+      <td>{{ patient.phoneNumber }}</td>
+      <td>{{ patient.email }}</td>
+      <td>{{ patient.tajNumber }}</td>
+      <td>
+        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info m-2" (click)="modify(patient)"></button>
+        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning m-2" (click)="onDelete(patient.id)"></button>
+    </td>
+    </tr>
+  </ng-template>
+</p-table>

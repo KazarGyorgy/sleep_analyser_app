@@ -1,0 +1,79 @@
+<div class="mx-auto" [formGroup]="registerForm">
+  <div class="row">
+    <div class="col">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{ "registration.lastname" | translate }}</mat-label>
+        <input matInput formControlName="lastName" />
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{ "registration.firstname" | translate }}</mat-label>
+        <input matInput formControlName="firstName" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-md-3">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{ "registration.zip" | translate }}</mat-label>
+        <input matInput formControlName="zip" [textMask]="{ mask: zipMask }" />
+      </mat-form-field>
+    </div>
+    <div class="col col-md-3">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{ "registration.city" | translate }}</mat-label>
+        <input matInput formControlName="city"
+      /></mat-form-field>
+    </div>
+    <div class="col col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{ "registration.address" | translate }}</mat-label>
+        <input matInput formControlName="streetAddress" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{ "registration.email" | translate }}</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+    </div>
+    <div class="col col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{ "registration.phone" | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="phoneNumber"
+          [textMask]="{ mask: phoneNumberMask }"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{ "registration.tajNumber" | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="tajNumber"
+          [textMask]="{ mask: tajMask }"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{ "registration.birthdate" | translate }}</mat-label>
+        <input type="date" matInput formControlName="birthdate" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <button mat-raised-button color="primary" (click)="onRegistration()">
+      Páciens hozzáadása
+    </button>
+  </div>
+</div>

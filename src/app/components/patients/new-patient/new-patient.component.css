@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+::ng-deep .mat-form-field-label {
+
+  color: gainsboro !important;
+ }
+
+ ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: gainsboro !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: gainsboro !important;
+}
