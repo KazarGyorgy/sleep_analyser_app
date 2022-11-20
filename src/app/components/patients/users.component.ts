@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { User } from '../model/user.model';
+import { User } from '../../model/user.model';
 import { PatientService } from './patient-service.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class UsersComponent implements OnInit {
   patients: User[] = [];
   tabIndex: number = 0;
   selectedPatient?: User;
+  selectedPatientId?: number;
 
   constructor(
     private patientsService: PatientService,
@@ -28,7 +29,12 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {}
 
   onModifyPatient(patient: User) {
-    this.tabIndex =1;
+    this.tabIndex = 1;
     this.selectedPatient = patient;
+  }
+
+  showUserSleepData(patientID:number){
+    this.selectedPatientId= patientID;
+    this.tabIndex=2;
   }
 }

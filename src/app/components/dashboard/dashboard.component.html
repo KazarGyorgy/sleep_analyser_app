@@ -1,0 +1,24 @@
+
+
+<p-card class="my-3 mx-3">
+  <div [formGroup]="form" class="d-flex">
+    <p-button  icon="pi pi-angle-left" iconPos="left" class="mx-2" (onClick)="decreaseDate()"></p-button>
+    <div class="field">
+
+      <p-calendar formControlName="date" [showIcon]="true" inputId="icon" ></p-calendar>
+  </div>
+  <p-button  icon="pi pi-angle-right" iconPos="left" class="mx-2" (onClick)="increaseDate()"></p-button>
+  </div>
+  <div class="d-flex row">
+    <div class="chart-container col-sm-12 col-md-6">
+      <canvas  id="hr" >{{ hrChart }}</canvas>
+    </div>
+    <div class="col-sm-6 col-md-6">
+      <canvas  id="oxygen"  >{{ bloodOxygenChart }}</canvas>
+      <span class="mx-2">Átlagos szint: <b>{{sleepingDataList.averageOxygen}} %</b></span>
+       <span class="mx-2">Minimum: <b>{{sleepingDataList.minOxygen}} % </b></span>
+        <span class="mx-2">Maximum: <b>{{sleepingDataList.maxOxygen}} %</b></span>
+    </div>
+
+  </div>
+</p-card>

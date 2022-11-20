@@ -2,17 +2,19 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
-import { User } from '../../model/user.model';
+import { User } from '../../../model/user.model';
 import { PatientService } from '../patient-service.service';
 
 @Component({
   selector: 'app-patient-list',
   templateUrl: './patient-list.component.html',
   styleUrls: ['./patient-list.component.css'],
+  providers: []
 })
 export class PatientListComponent implements OnInit {
   patientList: User[] = [];
   @Output() selectedPatient = new EventEmitter<User>();
+  @Output() selectedUserId = new EventEmitter<number>()
   constructor(
     private patientService: PatientService,
     private confirmationService: ConfirmationService,
@@ -34,13 +36,16 @@ export class PatientListComponent implements OnInit {
   modify(patient: User) {
     this.selectedPatient.emit(patient);
   }
+  showUser(patient:User){
+    this.selectedUserId.emit(patient.id);
+  }
 
   onDelete(userId: number) {
     this.confirmationService.confirm({
       message: 'Biztosan törölni szeretné az orvost?',
       accept: () => {
         this.patientService.delete(userId).subscribe((res) => {
-          console.log(res)
+          console.log(res);
           if (res) {
             this.messageService.add({
               severity: 'success',

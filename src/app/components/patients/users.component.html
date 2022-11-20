@@ -1,14 +1,24 @@
 <div class="m-1 mx-3 mx-auto">
-  <p-tabView class="w-100"[(activeIndex)]="tabIndex">
+  <p-tabView class="w-100" [(activeIndex)]="tabIndex">
     <p-tabPanel header="Páciensek">
       <p-card class="w-100">
-       <app-patient-list (selectedPatient)="onModifyPatient($event)"></app-patient-list>
+        <app-patient-list
+          (selectedPatient)="onModifyPatient($event)"
+          (selectedUserId)="showUserSleepData($event)"
+        ></app-patient-list>
       </p-card>
     </p-tabPanel>
 
     <p-tabPanel header="Új Páciens hozzáadása">
       <p-card class="w-100">
-      <app-new-patient [selectedPatient]="selectedPatient" ></app-new-patient>
+        <app-new-patient [selectedPatient]="selectedPatient"></app-new-patient>
+      </p-card>
+    </p-tabPanel>
+    <p-tabPanel header="Alvási adatok" *ngIf="selectedPatientId !== undefined">
+      <p-card class="w-100">
+        <app-patient-sleep-data
+          [selectedUserId]="selectedPatientId"
+        ></app-patient-sleep-data>
       </p-card>
     </p-tabPanel>
   </p-tabView>

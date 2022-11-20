@@ -1,9 +1,13 @@
 import {
-  Component, EventEmitter, OnInit, Output, SimpleChanges
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  SimpleChanges,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { User } from '../../model/user.model';
+import { User } from '../../../model/user.model';
 import { DoctorService } from '../doctor.service';
 
 @Component({
@@ -15,8 +19,6 @@ export class DoctorsTableComponent implements OnInit {
   doctorList: User[] = [];
   @Output() selectedUser = new EventEmitter<User>();
 
-
-
   constructor(
     private docService: DoctorService,
     private confirmationService: ConfirmationService,
@@ -24,19 +26,18 @@ export class DoctorsTableComponent implements OnInit {
     private translateServ: TranslateService
   ) {}
 
-
   ngOnInit(): void {
-    this.docService.needToRefresh.subscribe(needToRefresh => {
-      if(needToRefresh){
+    this.docService.needToRefresh.subscribe((needToRefresh) => {
+      if (needToRefresh) {
         this.getDoctors();
         this.docService.needToRefresh.next(false);
       }
-    })
+    });
     this.getDoctors();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-this.docService.needToRefresh.subscribe
+    this.docService.needToRefresh.subscribe;
     if (changes['needToRefresh'].currentValue == true) {
       this.getDoctors();
     }

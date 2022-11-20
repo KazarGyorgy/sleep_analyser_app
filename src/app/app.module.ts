@@ -42,9 +42,11 @@ import { PatientListComponent } from './components/patients/patient-list/patient
 import { UsersComponent } from './components/patients/users.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import {CalendarModule} from 'primeng/calendar';
 
 
 import { PasswordModule } from 'primeng/password';
+import { PatientSleepDataComponent } from './components/patients/patient-sleep-data/patient-sleep-data.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +60,7 @@ import { PasswordModule } from 'primeng/password';
     PatientListComponent,
     NewDoctorComponent,
     ChangePasswordComponent,
+    PatientSleepDataComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +81,7 @@ import { PasswordModule } from 'primeng/password';
     MenubarModule,
     PasswordModule,
     DividerModule,
+    CalendarModule,
     SplitButtonModule,MenuModule,
     TranslateModule.forRoot({
       loader: {
