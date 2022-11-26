@@ -1,9 +1,14 @@
 <p-menubar [model]="items" class="bg-primary">
-<ng-template  pTemplate="start">
-  <button mat-button (click)="navigateToHome()">Sleep Analyser</button>
-
-</ng-template>
-  <ng-template pTemplate="end" style="justify-items: flex-end">
-    <button mat-button><i class="pi pi-fw pi-sign-out p-my-auto red logout" (click)="onLogout()"></i></button>
+  <ng-template pTemplate="start">
+    <button mat-button (click)="navigateToHome()">Sleep Analyser</button>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <button mat-button (click)="user.toggle($event)">
+      <i class="pi pi-fw pi-user p-my-auto"></i>
+    </button>
+    <p-menu #user [popup]="true" [model]="userMenu"></p-menu>
+    <button mat-button>
+      <i class="pi pi-fw pi-sign-out p-my-auto logout" (click)="onLogout()"></i>
+    </button>
   </ng-template>
 </p-menubar>

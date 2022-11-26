@@ -37,6 +37,8 @@
       <td>{{ patient.email }}</td>
       <td>{{ patient.tajNumber }}</td>
       <td>
+
+        <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info m-2" (click)="showUser(patient)"></button>
         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info m-2" (click)="modify(patient)"></button>
         <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning m-2" (click)="onDelete(patient.id)"></button>
     </td>

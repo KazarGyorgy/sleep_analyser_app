@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from '../model/user.model';
+import { User } from '../../model/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -44,9 +44,8 @@ export class PatientService {
     );
   }
 
-  update(userId: number,formData:any): Observable<any> {
+  update(userId: number, formData: any): Observable<any> {
     return this.http.patch(`${this.apiURL}/${userId}`, formData);
-
   }
   getUserList(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiURL}/users/patient`);

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from '../model/user.model';
+import { User } from '../../model/user.model';
 
 @Injectable({
   providedIn: 'root',

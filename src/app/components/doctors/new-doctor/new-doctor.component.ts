@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastHelperService } from 'src/app/helpers/toast-helper';
 
-import { User } from '../../model/user.model';
+import { User } from '../../../model/user.model';
 import { DoctorService } from '../doctor.service';
 
 @Component({

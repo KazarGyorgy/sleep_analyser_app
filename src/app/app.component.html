@@ -1,4 +1,4 @@
-<app-toolbar>
+<app-toolbar *ngIf="showNavbar$ | async">
 </app-toolbar>
   <router-outlet></router-outlet>
 

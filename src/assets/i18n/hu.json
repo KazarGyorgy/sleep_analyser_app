@@ -16,13 +16,13 @@
     "lastname": "Vezetéknév",
     "firstname": "Keresztnév",
     "birthdate": "Születési dátum",
-    "drID": "Orvosi azonosító",
+    "drNo": "Orvosi azonosító",
     "zip": "Irányítószám",
     "city": "Város",
     "address": "Cím",
     "phone": "Telefonszám",
     "email": "E-mail cím",
-    "taj": "Taj szám",
+    "tajNumber": "Taj szám",
     "username":"Felhasználónév"
   }
 

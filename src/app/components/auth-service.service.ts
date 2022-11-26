@@ -42,8 +42,6 @@ export class AuthService {
   }
 
   refreshToken(token: string) {
-    console.log('authService Bearer ' + token);
-
     const path = `${environment.api}/role/refresh-token`;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get(path, { headers: headers });

@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ToastHelperService } from 'src/app/helpers/toast-helper';
-import { User } from '../../model/user.model';
+import { User } from '../../../model/user.model';
 import { PatientService } from '../patient-service.service';
 
 @Component({
@@ -104,14 +104,13 @@ export class NewPatientComponent implements OnInit {
                 `A felhasználó módosítása sikeres volt.`
               );
               this.registerForm.reset();
-             this.patientService.needToRefresh.next(true);
-             this.patientService.activeTabIndex.next(0);
+              this.patientService.needToRefresh.next(true);
+              this.patientService.activeTabIndex.next(0);
             },
             (err: any) => {
               this.toastHelper.errorMessage('Hiba a mentés során', '');
             }
           );
-
       }
     } else {
       this.messageService.add({
