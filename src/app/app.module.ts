@@ -1,7 +1,7 @@
 import {
   HttpClient,
   HttpClientModule,
-  HTTP_INTERCEPTORS
+  HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -42,8 +42,8 @@ import { PatientListComponent } from './components/patients/patient-list/patient
 import { UsersComponent } from './components/patients/users.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
-import {CalendarModule} from 'primeng/calendar';
-
+import { CalendarModule } from 'primeng/calendar';
+import { RatingModule } from 'primeng/rating';
 
 import { PasswordModule } from 'primeng/password';
 import { PatientSleepDataComponent } from './components/patients/patient-sleep-data/patient-sleep-data.component';
@@ -82,7 +82,9 @@ import { PatientSleepDataComponent } from './components/patients/patient-sleep-d
     PasswordModule,
     DividerModule,
     CalendarModule,
-    SplitButtonModule,MenuModule,
+    RatingModule,
+    SplitButtonModule,
+    MenuModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

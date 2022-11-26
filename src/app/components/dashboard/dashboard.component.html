@@ -1,24 +1,130 @@
+<div class="m-5">
+  <p-tabView>
+    <p-tabPanel header="Napi statisztika">
+      <p-card class="my-3 mx-3">
+        <div [formGroup]="form" class="d-flex">
+          <p-button
+            icon="pi pi-angle-left"
+            iconPos="left"
+            class="mx-2"
+            (onClick)="decreaseDate()"
+          ></p-button>
+          <div class="field">
+            <p-calendar
+              formControlName="date"
+              [showIcon]="true"
+              inputId="icon"
+            ></p-calendar>
+          </div>
+          <p-button
+            icon="pi pi-angle-right"
+            iconPos="left"
+            class="mx-2"
+            (onClick)="increaseDate()"
+          ></p-button>
+        </div>
+        <div class="d-flex row">
+          <div class="chart-container col-sm-12 col-md-6">
+            <canvas id="hr">{{ hrChart }}</canvas>
+          </div>
+          <div class="col-sm-6 col-md-6">
+            <canvas id="oxygen">{{ bloodOxygenChart }}</canvas>
+            <span class="mx-2"
+              >Átlagos szint:
+              <b>{{ sleepingDataList.averageOxygen }} %</b></span
+            >
+            <span class="mx-2"
+              >Minimum: <b>{{ sleepingDataList.minOxygen }} % </b></span
+            >
+            <span class="mx-2"
+              >Maximum: <b>{{ sleepingDataList.maxOxygen }} %</b></span
+            >
+          </div>
+        </div>
+        <div class="col-12 mx-auto">
+          <h4 class="align-center">Kérem értékelje alvása minőségét</h4>
 
+          <p-rating [(ngModel)]="rating" [stars]="10">
+          </p-rating>
+        </div>
+        <div class="my-2">
+          <h4>Megjegyzés</h4>
+          <textarea [(ngModel)]="ratingMessage" id="input" rows="5" cols="30" pInputTextarea></textarea>
+        </div>
+        <div>
+          <button [disabled]="saveDisable()"
+            pButton
+            type="button"
+            label="Értékelés mentése"
+            icon="save"
+            (click)="saveRating()"
+          ></button>
+        </div>
+      </p-card>
+    </p-tabPanel>
+    <p-tabPanel header="Heti statisztika">
+      <p-card class="my-3 mx-3">
+        <div [formGroup]="form" class="d-flex">
+          <p-button
+            icon="pi pi-angle-left"
+            iconPos="left"
+            class="mx-2"
+            (onClick)="decreaseWeek()"
+          ></p-button>
+          <div class="field">
+            <p-calendar
+              formControlName="dateWeekRange"
+              [showIcon]="true"
+              inputId="icon"
+            ></p-calendar>
+          </div>
+          <p-button
+            icon="pi pi-angle-right"
+            iconPos="left"
+            class="mx-2"
+            (onClick)="increaseWeek()"
+          ></p-button>
+        </div>
+        <div class="d-flex row">
+          <div class="chart-container col-12">
+            <canvas id="weekly">{{ weeklyChart }}</canvas>
+          </div>
+          <!-- <p>átlagos napi alvás a héten: {{weeklyStats.averageSleepLengt}}</p> -->
+        </div>
+      </p-card>
+    </p-tabPanel>
+    <p-tabPanel header="havi statisztika">
+      <p-card class="my-3 mx-3">
+        <div [formGroup]="form" class="d-flex">
+          <p-button
+            icon="pi pi-angle-left"
+            iconPos="left"
+            class="mx-2"
+            (onClick)="decreaseMonth()"
+          ></p-button>
+          <div class="field">
+            <p-calendar
+              formControlName="dateMonthRange"
+              [showIcon]="true"
+              inputId="icon"
+              view="month"
+              dateFormat="yy/mm"
+            ></p-calendar>
+          </div>
+          <p-button
+            icon="pi pi-angle-right"
+            iconPos="left"
+            class="mx-2"
+            (onClick)="increaseMonth()"
+          ></p-button>
+        </div>
 
-<p-card class="my-3 mx-3">
-  <div [formGroup]="form" class="d-flex">
-    <p-button  icon="pi pi-angle-left" iconPos="left" class="mx-2" (onClick)="decreaseDate()"></p-button>
-    <div class="field">
-
-      <p-calendar formControlName="date" [showIcon]="true" inputId="icon" ></p-calendar>
-  </div>
-  <p-button  icon="pi pi-angle-right" iconPos="left" class="mx-2" (onClick)="increaseDate()"></p-button>
-  </div>
-  <div class="d-flex row">
-    <div class="chart-container col-sm-12 col-md-6">
-      <canvas  id="hr" >{{ hrChart }}</canvas>
-    </div>
-    <div class="col-sm-6 col-md-6">
-      <canvas  id="oxygen"  >{{ bloodOxygenChart }}</canvas>
-      <span class="mx-2">Átlagos szint: <b>{{sleepingDataList.averageOxygen}} %</b></span>
-       <span class="mx-2">Minimum: <b>{{sleepingDataList.minOxygen}} % </b></span>
-        <span class="mx-2">Maximum: <b>{{sleepingDataList.maxOxygen}} %</b></span>
-    </div>
-
-  </div>
-</p-card>
+        <div class="d-flex row">
+          <div class="chart-container col-12">
+            <canvas id="monthly">{{ monthlyChart }}</canvas>
+          </div>
+        </div>
+      </p-card>
+    </p-tabPanel>
+  </p-tabView>
+</div>

@@ -1,4 +1,6 @@
 <div class="mx-auto" [formGroup]="registerForm">
+  <h2 *ngIf="!selectedPatient">Új páciens regisztrálása</h2>
+  <h2 *ngIf="selectedPatient">Páciens adatainak módosítása</h2>
   <div class="row">
     <div class="col">
       <mat-form-field appearance="fill" class="w-100">
@@ -72,8 +74,21 @@
   </div>
 
   <div class="d-flex justify-content-center">
-    <button mat-raised-button color="primary" (click)="onRegistration()">
+    <button
+      *ngIf="!selectedPatient"
+      mat-raised-button
+      color="primary"
+      (click)="onRegistration()"
+    >
       Páciens hozzáadása
+    </button>
+    <button
+      *ngIf="selectedPatient"
+      mat-raised-button
+      color="primary"
+      (click)="onRegistration()"
+    >
+      Páciens adatainak módosítása
     </button>
   </div>
 </div>
