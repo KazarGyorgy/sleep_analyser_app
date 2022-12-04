@@ -1,44 +1,70 @@
-<p-table class="w-100" [value]="doctorList">
+<p-table
+  class="w-100"
+  [value]="doctorList"
+  [paginator]="true"
+  [rows]="5"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[5, 10, 15]"
+>
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="lastName">
-        {{'registration.lastname' | translate}}<p-sortIcon field="lastName"></p-sortIcon>
+        {{ "registration.lastname" | translate
+        }}<p-sortIcon field="lastName"></p-sortIcon>
       </th>
       <th pSortableColumn="firstName">
-        {{'registration.firstname' | translate}} <p-sortIcon field="firstName"></p-sortIcon>
+        {{ "registration.firstname" | translate }}
+        <p-sortIcon field="firstName"></p-sortIcon>
       </th>
       <th pSortableColumn="zip">
-        {{'registration.zip' | translate}} <p-sortIcon field="zip"></p-sortIcon>
+        {{ "registration.zip" | translate }}
+        <p-sortIcon field="zip"></p-sortIcon>
       </th>
       <th pSortableColumn="city">
-        {{'registration.city' | translate}} <p-sortIcon field="city"></p-sortIcon>
-      </th> <th pSortableColumn="streetAddress">
-        {{'registration.address' | translate}} <p-sortIcon field="streetAddress"></p-sortIcon>
+        {{ "registration.city" | translate }}
+        <p-sortIcon field="city"></p-sortIcon>
+      </th>
+      <th pSortableColumn="streetAddress">
+        {{ "registration.address" | translate }}
+        <p-sortIcon field="streetAddress"></p-sortIcon>
       </th>
       <th pSortableColumn="phoneNumber">
-        {{'registration.phone' | translate}} <p-sortIcon field="phoneNumber"></p-sortIcon>
+        {{ "registration.phone" | translate }}
+        <p-sortIcon field="phoneNumber"></p-sortIcon>
       </th>
       <th pSortableColumn="email">
-        {{'registration.email' | translate}} <p-sortIcon field="email"></p-sortIcon>
-      </th> <th>
-        Módosítás / törlés
+        {{ "registration.email" | translate }}
+        <p-sortIcon field="email"></p-sortIcon>
       </th>
+      <th>Módosítás / törlés</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-dr>
     <tr>
       <td>{{ dr.lastName }}</td>
       <td>{{ dr.firstName }}</td>
-      <td>{{ dr.zip}}</td>
-      <td>{{dr.city}}</td>
-      <td>{{ dr.streetAddress}}</td>
+      <td>{{ dr.zip }}</td>
+      <td>{{ dr.city }}</td>
+      <td>{{ dr.streetAddress }}</td>
       <td>{{ dr.phoneNumber }}</td>
       <td>{{ dr.email }}</td>
 
       <td>
-        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info m-2" (click)="modify(dr)"></button>
-        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger m-2" (click)="onDelete(dr.id)"></button>
-    </td>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-info m-2"
+          (click)="modify(dr)"
+        ></button>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-danger m-2"
+          (click)="onDelete(dr.id)"
+        ></button>
+      </td>
     </tr>
   </ng-template>
 </p-table>

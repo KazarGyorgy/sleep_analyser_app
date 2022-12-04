@@ -11,4 +11,10 @@ export interface ExtendedSleepingData {
   minOxygen: number;
   maxOxygen: number;
   averageOxygen: number;
+  rem: number;
+  light: number;
+  deep: number;
+  lengthOfSleep: number;
+  rating: number;
+  ratingMessage: string;
 }

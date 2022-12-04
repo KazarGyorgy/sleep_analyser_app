@@ -1,4 +1,4 @@
-<div class="m-5">
+<div [ngClass]="{'m-1':selectedUserId,'m-5':!selectedUserId}">
   <p-tabView>
     <p-tabPanel header="Napi statisztika">
       <p-card class="my-3 mx-3">
@@ -22,43 +22,147 @@
             class="mx-2"
             (onClick)="increaseDate()"
           ></p-button>
+
+          <div *ngIf="!selectedUserId" class="field">
+            <p-button
+              label="Saját értékelés"
+              class="mx-2 p-button-rounded p-button-info"
+              (onClick)="openRatingDialog()" ></p-button
+            >
+          </div>
+          <div *ngIf="selectedUserId" class="field">
+            <p-button
+              label="Felhasználó által értékel alvási minőség"
+              class="mx-2 p-button-rounded p-button-success"
+              (onClick)="openRatingDialog()"
+            ></p-button>
+          </div>
         </div>
         <div class="d-flex row">
-          <div class="chart-container col-sm-12 col-md-6">
-            <canvas id="hr">{{ hrChart }}</canvas>
+          <div class="col-sm-12 col-md-6 justify-content-center">
+            <div class="chart-container">
+              <canvas id="hr">{{ hrChart }}</canvas>
+            </div>
+            <div class="row">
+              <p-card class="col-4 p-shadow-12">
+                <ng-template pTemplate="header">
+                  Könnyed alvás hossza
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <p-knob
+                    [readonly]="true"
+                    [max]="8"
+                    [(ngModel)]="sleepingDataList.light"
+                    [valueColor]="'limegreen'"
+                  ></p-knob>
+                </ng-template>
+              </p-card>
+              <p-card class="col-4 p-shadow-12">
+                <ng-template pTemplate="header">
+                  Mély alvás hossza
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <p-knob
+                    [readonly]="true"
+                    [max]="4"
+                    [(ngModel)]="sleepingDataList.deep"
+                    [valueColor]="'limegreen'"
+                  ></p-knob>
+                </ng-template>
+              </p-card>
+              <p-card class="col-4 p-shadow-12">
+                <ng-template pTemplate="header">
+                  Rem alvási fázis hossza
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <p-knob
+                    [readonly]="true"
+                    [max]="3"
+                    [(ngModel)]="sleepingDataList.rem"
+                    [valueColor]="'limegreen'"
+                  ></p-knob>
+                </ng-template>
+              </p-card>
+              <p-card class="col-4 p-shadow-12">
+                <ng-template pTemplate="header">
+                  Alvással töltött idő
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <p-knob
+                    [readonly]="true"
+                    [max]="8"
+                    [(ngModel)]="sleepingDataList.lengthOfSleep"
+                    [valueColor]="
+                      sleepingDataList.lengthOfSleep < 6
+                        ? 'red'
+                        : sleepingDataList.lengthOfSleep >= 6 &&
+                          sleepingDataList.lengthOfSleep < 7
+                        ? 'yellow'
+                        : 'limegreen'
+                    "
+                  ></p-knob>
+                </ng-template>
+              </p-card>
+            </div>
           </div>
-          <div class="col-sm-6 col-md-6">
-            <canvas id="oxygen">{{ bloodOxygenChart }}</canvas>
-            <span class="mx-2"
-              >Átlagos szint:
-              <b>{{ sleepingDataList.averageOxygen }} %</b></span
-            >
-            <span class="mx-2"
-              >Minimum: <b>{{ sleepingDataList.minOxygen }} % </b></span
-            >
-            <span class="mx-2"
-              >Maximum: <b>{{ sleepingDataList.maxOxygen }} %</b></span
-            >
-          </div>
-        </div>
-        <div class="col-12 mx-auto">
-          <h4 class="align-center">Kérem értékelje alvása minőségét</h4>
 
-          <p-rating [(ngModel)]="rating" [stars]="10">
-          </p-rating>
-        </div>
-        <div class="my-2">
-          <h4>Megjegyzés</h4>
-          <textarea [(ngModel)]="ratingMessage" id="input" rows="5" cols="30" pInputTextarea></textarea>
-        </div>
-        <div>
-          <button [disabled]="saveDisable()"
-            pButton
-            type="button"
-            label="Értékelés mentése"
-            icon="save"
-            (click)="saveRating()"
-          ></button>
+          <div class="col-sm-12 col-md-6 justify-content-center">
+            <div class="chart-container">
+              <canvas id="oxygen">{{ bloodOxygenChart }}</canvas>
+            </div>
+            <div class="row">
+              <p-card class="col-4 p-shadow-12">
+                <ng-template pTemplate="header">
+                  Minimális véroxigén szint
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <p-knob
+                    [readonly]="true"
+                    [max]="100"
+                    [(ngModel)]="sleepingDataList.minOxygen"
+                    [valueColor]="'purple'"
+                  ></p-knob>
+                </ng-template>
+              </p-card>
+              <p-card class="col-4 p-shadow-12">
+                <ng-template pTemplate="header">
+                  Maximális véroxigén szint
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <p-knob
+                    [readonly]="true"
+                    [max]="100"
+                    [(ngModel)]="sleepingDataList.maxOxygen"
+                    [valueColor]="'purple'"
+                  ></p-knob>
+                </ng-template>
+              </p-card>
+              <p-card class="col-4 p-shadow-12">
+                <ng-template pTemplate="header">
+                  Napi átlagos véroxigén szint
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <p-knob
+                    [readonly]="true"
+                    [max]="100"
+                    [(ngModel)]="sleepingDataList.averageOxygen"
+                    [valueColor]="'purple'"
+                  ></p-knob>
+                </ng-template>
+              </p-card>
+              <div>
+                <p-card *ngIf="sleepingDataList.minOxygen < 90">
+                  <i
+                    class="pi pi-heart"
+                    style="font-size: 2rem; color: red"
+                  ></i>
+                  <span style="color: red"
+                    >A véroxigén szint szitje elérte a kritikus szintet!</span
+                  >
+                </p-card>
+              </div>
+            </div>
+          </div>
         </div>
       </p-card>
     </p-tabPanel>
@@ -89,7 +193,68 @@
           <div class="chart-container col-12">
             <canvas id="weekly">{{ weeklyChart }}</canvas>
           </div>
-          <!-- <p>átlagos napi alvás a héten: {{weeklyStats.averageSleepLengt}}</p> -->
+          <div class="row">
+            <p-card class="col-3 p-shadow-8">
+              <ng-template pTemplate="header">
+                Minimum alvás a héten
+              </ng-template>
+              <ng-template pTemplate="content">
+                <p-knob
+                  [readonly]="true"
+                  [max]="10"
+                  [valueColor]="
+                    minSleepLengthOnWeek < 6
+                      ? 'red'
+                      : minSleepLengthOnWeek >= 6 && minSleepLengthOnWeek < 7
+                      ? 'yellow'
+                      : 'green'
+                  "
+                  [(ngModel)]="minSleepLengthOnWeek"
+                ></p-knob>
+              </ng-template>
+            </p-card>
+            <p-card class="col-3">
+              <ng-template pTemplate="header">
+                Maximum alvás a héten
+              </ng-template>
+              <ng-template pTemplate="content">
+                <p-knob
+                  [readonly]="true"
+                  [max]="10"
+                  [valueColor]="
+                    maxSleepLengthOnWeek < 6
+                      ? 'red'
+                      : maxSleepLengthOnWeek >= 6 && maxSleepLengthOnWeek < 7
+                      ? 'yellow'
+                      : 'green'
+                  "
+                  [(ngModel)]="maxSleepLengthOnWeek"
+                ></p-knob>
+              </ng-template>
+            </p-card>
+            <p-card class="col-3">
+              <ng-template pTemplate="header">
+                Átlagos alvással töltött idő a héten
+              </ng-template>
+              <ng-template pTemplate="content">
+                <p-knob
+                  [max]="10"
+                  [readonly]="true"
+                  [valueColor]="
+                    averageSleepLengthOnWeek < 6
+                      ? 'red'
+                      : averageSleepLengthOnWeek >= 6 &&
+                        averageSleepLengthOnWeek < 7
+                      ? 'yellow'
+                      : 'green'
+                  "
+                  [(ngModel)]="averageSleepLengthOnWeek"
+                ></p-knob>
+              </ng-template>
+            </p-card>
+
+            <!-- <p>átlagos napi alvás a héten: {{weeklyStats.averageSleepLengt}}</p> -->
+          </div>
         </div>
       </p-card>
     </p-tabPanel>
@@ -124,7 +289,103 @@
             <canvas id="monthly">{{ monthlyChart }}</canvas>
           </div>
         </div>
+        <div class="row mt-3">
+          <p-card class="col-4 p-shadow-12">
+            <ng-template pTemplate="header">
+              Legkevesebb alvás a hónapban
+            </ng-template>
+            <ng-template pTemplate="content">
+              <p-knob
+                [readonly]="true"
+                [max]="10"
+                [valueColor]="
+                  minSleepLengthOnMonth < 6
+                    ? 'red'
+                    : minSleepLengthOnMonth >= 6 && minSleepLengthOnMonth < 7
+                    ? 'yellow'
+                    : 'green'
+                "
+                [(ngModel)]="minSleepLengthOnMonth"
+              ></p-knob>
+            </ng-template>
+          </p-card>
+          <p-card class="col-4">
+            <ng-template pTemplate="header">
+              Legtöbb alvás a hónapban
+            </ng-template>
+            <ng-template pTemplate="content">
+              <p-knob
+                [readonly]="true"
+                [max]="10"
+                [valueColor]="
+                  maxSleepLengthOnMonth < 6
+                    ? 'red'
+                    : maxSleepLengthOnMonth >= 6 && maxSleepLengthOnMonth < 7
+                    ? 'yellow'
+                    : 'green'
+                "
+                [(ngModel)]="maxSleepLengthOnMonth"
+              ></p-knob>
+            </ng-template>
+          </p-card>
+          <p-card class="col-4">
+            <ng-template pTemplate="header">
+              Átlagos alvással töltött idő a hónapban
+            </ng-template>
+            <ng-template pTemplate="content">
+              <p-knob
+                [max]="10"
+                [readonly]="true"
+                [valueColor]="
+                  averageSleepLengthOnMonth < 6
+                    ? 'red'
+                    : averageSleepLengthOnMonth >= 6 &&
+                      averageSleepLengthOnMonth < 7
+                    ? 'yellow'
+                    : 'green'
+                "
+                [(ngModel)]="averageSleepLengthOnMonth"
+              ></p-knob>
+            </ng-template>
+          </p-card>
+
+          <!-- <p>átlagos napi alvás a héten: {{weeklyStats.averageSleepLengt}}</p> -->
+        </div>
       </p-card>
     </p-tabPanel>
   </p-tabView>
 </div>
+<p-dialog header="Napi alvási minőség értékelése" [(visible)]="display">
+  <div class="col-12 mx-auto">
+    <h4 class="align-center">Kérem értékelje alvása minőségét</h4>
+
+    <p-rating
+      [disabled]="selectedUserId !== undefined || sleepingDataList.rating >0"
+      [(ngModel)]="rating"
+      [stars]="10"
+    >
+    </p-rating>
+  </div>
+  <div class="my-2">
+    <h4>Megjegyzés</h4>
+    <textarea
+      [(ngModel)]="ratingMessage"
+      [disabled]="selectedUserId !== undefined || sleepingDataList.rating > 0"
+      id="input"
+      rows="5"
+      cols="30"
+      pInputTextarea
+    ></textarea>
+  </div>
+  <div>
+    <button
+      *ngIf="!selectedUserId && sleepingDataList.rating === 0"
+      [disabled]="saveDisable()"
+      pButton
+      type="button"
+      label="Értékelés mentése"
+      icon="save"
+      (click)="saveRating()"
+    ></button>
+  </div>
+</p-dialog>

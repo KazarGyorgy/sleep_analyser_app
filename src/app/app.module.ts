@@ -1,7 +1,7 @@
 import {
   HttpClient,
   HttpClientModule,
-  HTTP_INTERCEPTORS,
+  HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,13 +18,17 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DividerModule } from 'primeng/divider';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
+import { KnobModule } from 'primeng/knob';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
+import { PasswordModule } from 'primeng/password';
+import { RatingModule } from 'primeng/rating';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
@@ -39,14 +43,11 @@ import { NewDoctorComponent } from './components/doctors/new-doctor/new-doctor.c
 import { LoginComponent } from './components/login/login.component';
 import { NewPatientComponent } from './components/patients/new-patient/new-patient.component';
 import { PatientListComponent } from './components/patients/patient-list/patient-list.component';
+import { PatientSleepDataComponent } from './components/patients/patient-sleep-data/patient-sleep-data.component';
 import { UsersComponent } from './components/patients/users.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
-import { CalendarModule } from 'primeng/calendar';
-import { RatingModule } from 'primeng/rating';
-
-import { PasswordModule } from 'primeng/password';
-import { PatientSleepDataComponent } from './components/patients/patient-sleep-data/patient-sleep-data.component';
+import {DialogModule} from 'primeng/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,8 +84,12 @@ import { PatientSleepDataComponent } from './components/patients/patient-sleep-d
     DividerModule,
     CalendarModule,
     RatingModule,
+    DialogModule,
     SplitButtonModule,
     MenuModule,
+    CalendarModule,
+    RatingModule,
+    KnobModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

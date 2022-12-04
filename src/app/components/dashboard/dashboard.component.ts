@@ -34,6 +34,14 @@ export class DashboardComponent implements OnInit {
   public weeklySleepingDataList!: WeeklySleepingData[];
   public rating: number = 0;
   public ratingMessage: string = '';
+  public monthlySleepingDataList!: WeeklySleepingData[];
+  public minSleepLengthOnWeek = 0;
+  public maxSleepLengthOnWeek = 0;
+  public averageSleepLengthOnWeek = 0;
+  public minSleepLengthOnMonth = 0;
+  public maxSleepLengthOnMonth = 0;
+  public averageSleepLengthOnMonth = 0;
+  display: boolean = false;
 
   public selectedDate: Date = new Date();
   private user: any;
@@ -105,7 +113,7 @@ export class DashboardComponent implements OnInit {
       .toISOString()
       .split('T')[0];
 
-    this.weeklySleepingDataList = await this.service
+    this.monthlySleepingDataList = await this.service
       .getMonthlySleepingData(
         this.selectedUserId ? this.selectedUserId : this.user.userId,
         day
@@ -115,6 +123,18 @@ export class DashboardComponent implements OnInit {
 
   async createChart() {
     await this.getSleepingData();
+    this.sleepingDataList.rem =
+      Math.round(this.sleepingDataList.rem * 100) / 100;
+    this.sleepingDataList.deep =
+      Math.round(this.sleepingDataList.deep * 100) / 100;
+    this.sleepingDataList.light =
+      Math.round(this.sleepingDataList.light * 100) / 100;
+    this.sleepingDataList.lengthOfSleep =
+      Math.round(this.sleepingDataList.lengthOfSleep * 100) / 100;
+
+      this.rating= this.sleepingDataList.rating;
+      this.ratingMessage= this.sleepingDataList.ratingMessage;
+
     this.hrChart = new Chart('hr', {
       type: 'line', //this denotes tha type of chart
 
@@ -183,6 +203,30 @@ export class DashboardComponent implements OnInit {
 
   async createWeeklyChart() {
     await this.getWeeklySleepingData();
+
+    this.minSleepLengthOnWeek =
+      Math.round(
+        this.weeklySleepingDataList.reduce(function (prev, curr) {
+          return prev.lengthOfSleep < curr.lengthOfSleep ||
+            curr.lengthOfSleep == 0
+            ? prev
+            : curr;
+        }).lengthOfSleep * 100
+      ) / 100;
+    this.maxSleepLengthOnWeek =
+      Math.round(
+        this.weeklySleepingDataList.reduce(function (prev, curr) {
+          return prev.lengthOfSleep > curr.lengthOfSleep ? prev : curr;
+        }).lengthOfSleep * 100
+      ) / 100;
+    const sum = this.weeklySleepingDataList.reduce(
+      (a, b) => a + b.lengthOfSleep,
+      0
+    );
+
+    this.averageSleepLengthOnWeek =
+      Math.round((sum / this.weeklySleepingDataList.length) * 100) / 100 || 0;
+
     this.weeklyChart = new Chart('weekly', {
       type: 'bar', //this denotes tha type of chart
 
@@ -219,20 +263,45 @@ export class DashboardComponent implements OnInit {
 
   async createMonthlyChart() {
     await this.getMonthlySleepingData();
+
+    this.minSleepLengthOnMonth =
+      Math.round(
+        this.monthlySleepingDataList.reduce(function (prev, curr) {
+          return prev.lengthOfSleep < curr.lengthOfSleep ||
+            curr.lengthOfSleep == 0
+            ? prev
+            : curr;
+        }).lengthOfSleep * 100
+      ) / 100;
+    this.maxSleepLengthOnMonth =
+      Math.round(
+        this.monthlySleepingDataList.reduce(function (prev, curr) {
+          return prev.lengthOfSleep > curr.lengthOfSleep ? prev : curr;
+        }).lengthOfSleep * 100
+      ) / 100;
+    const sum = this.monthlySleepingDataList.reduce(
+      (a, b) => a + b.lengthOfSleep,
+      0
+    );
+    this.averageSleepLengthOnMonth =
+      Math.round((sum / this.monthlySleepingDataList.length) * 100) / 100 || 0;
     this.monthlyChart = new Chart('monthly', {
       type: 'bar', //this denotes tha type of chart
 
       data: {
         // values on X-Axis
-        labels: this.weeklySleepingDataList.map((data) => {
+
+        labels: this.monthlySleepingDataList.map((data) => {
           const date = new Date(data.dateOfMeasurement);
           return date.toISOString().split('T')[0];
         }),
         datasets: [
           {
             label: 'alvás hossza',
-            data: this.weeklySleepingDataList.map((data) => data.lengthOfSleep),
-            backgroundColor: this.weeklySleepingDataList.map((data) =>
+            data: this.monthlySleepingDataList.map(
+              (data) => data.lengthOfSleep
+            ),
+            backgroundColor: this.monthlySleepingDataList.map((data) =>
               data.lengthOfSleep > 7
                 ? 'limegreen'
                 : data.lengthOfSleep > 6
@@ -247,6 +316,7 @@ export class DashboardComponent implements OnInit {
         scales: {
           y: {
             min: 0,
+            max: 12,
           },
         },
       },
@@ -297,6 +367,10 @@ export class DashboardComponent implements OnInit {
         this.ratingMessage,
         this.form?.get('date')?.value
       )
-      .subscribe();
+      .subscribe(() => (this.display = false));
+  }
+
+  openRatingDialog() {
+    this.display = true;
   }
 }

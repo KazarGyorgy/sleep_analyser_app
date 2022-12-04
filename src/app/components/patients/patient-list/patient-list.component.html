@@ -1,4 +1,4 @@
-<p-table class="w-100" [value]="patientList">
+<p-table class="w-100" [value]="patientList" [paginator]="true" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]">
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="lastName">
